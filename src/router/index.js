@@ -2,10 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/views/HelloWorld'
 import Loginpage from '@/views/Login'
-import A from '@/views/A'
 const index = () => import('@/views/index')
 const T_WL_ITEMSIZE = () => import('@/views/T_WL_ITEMSIZE')
-const B = () => import('@/views/B')
+const T_MANUAL_EST_EC = () => import('@/views/T_MANUAL_EST_EC')
 Vue.use(Router)
 
 let router = new Router({
@@ -32,19 +31,14 @@ let router = new Router({
       component: index,
       children:[
         {
-          path: '/a',
-          name: 'A',
-          component: A
-        },
-        {
-          path: '/b',
-          name: 'B',
-          component: B
-        },
-        {
           path: '/T_WL_ITEMSIZE',
           name: 'T_WL_ITEMSIZE',
           component: T_WL_ITEMSIZE
+        },
+        {
+          path: '/T_MANUAL_EST_EC',
+          name: 'T_MANUAL_EST_EC',
+          component: T_MANUAL_EST_EC
         }
       ]
     }
