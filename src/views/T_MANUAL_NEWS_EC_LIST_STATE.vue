@@ -7,13 +7,19 @@
                         <el-input v-model="entity.itemCode" placeholder="输入料号"></el-input>
                     </el-form-item>
                 </el-col>
+                <el-col :span="6">
+                    <el-form-item label="料号简称">
+                        <el-input v-model="entity.itemName" placeholder="输入料号简称"></el-input>
+                    </el-form-item>
+                </el-col>
                  <el-col :span="6">
-                    <el-form-item label="目标类型">
-                        <el-radio-group v-model="entity.targetType">
-                            <el-radio-button label="M">月</el-radio-button>
-                            <el-radio-button label="Y">年</el-radio-button>
-                            </el-radio-group>
-                        </el-form-item>
+                    <el-form-item label="是否追踪">
+                        <el-radio-group v-model="entity.onTrace">
+                            <el-radio-button label="">全部</el-radio-button>
+                            <el-radio-button label="是"></el-radio-button>
+                            <el-radio-button label="否"></el-radio-button>
+                        </el-radio-group>
+                    </el-form-item>
                 </el-col>
                 <el-col :span="2">
                      <el-form-item>
@@ -40,18 +46,6 @@
                     </el-upload>
                 </el-col>
             </el-row>
-            <el-row type="flex" justify="start">
-                 <el-col :span="6">
-                    <el-form-item label="年">
-                        <el-input v-model="entity.year" placeholder="输入年"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                    <el-form-item label="月">
-                        <el-input v-model="entity.month" placeholder="输入月"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
             <el-row type="flex" justify="end">
                 <el-col :span="20">
                     <div width="300px"></div>
@@ -70,28 +64,12 @@
             label="料号">
             </el-table-column>
             <el-table-column
-            prop="year"
-            label="年">
+            prop="itemName"
+            label="料号简称">
             </el-table-column>
             <el-table-column
-            prop="month"
-            label="月">
-            </el-table-column>
-            <el-table-column
-            prop="targetType"
-            label="目标类型">
-            </el-table-column>
-            <el-table-column
-            prop="saleNumber"
-            label="目标零支销售量">
-            </el-table-column>
-            <el-table-column
-            prop="salePrice"
-            label="目标零支销售单价">
-            </el-table-column>
-            <el-table-column
-            prop="saleAmount"
-            label="目标财务毛利额">
+            prop="onTrace"
+            label="是否追踪">
             </el-table-column>
             <el-table-column
             fixed="right"
@@ -123,43 +101,21 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="目标类型" :label-width="formLabelWidth">
-                            <el-input v-model="single.targetType" :readonly="readonly"></el-input>
+                        <el-form-item label="料号简称" :label-width="formLabelWidth">
+                            <el-input v-model="single.itemName" :readonly="readonly"></el-input>
                         </el-form-item>
                    </el-col>
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="12">
-                        <el-form-item label="年" :label-width="formLabelWidth">
-                            <el-input v-model="single.year" :readonly="readonly"></el-input>
+                        <el-form-item label="是否追踪">
+                            <el-input v-model="single.onTrace" v-if="readonly" :readonly="readonly"></el-input>
+                            <el-radio-group v-model="single.onTrace" v-else >
+                                <el-radio-button label="是"></el-radio-button>
+                                <el-radio-button label="否"></el-radio-button>
+                            </el-radio-group>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12">
-                        <el-form-item label="月" :label-width="formLabelWidth">
-                            <el-input v-model="single.month" :readonly="readonly"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="14">
-                        <el-form-item label="目标零支销售量" :label-width="formLabelWidth">
-                            <el-input v-model="single.saleNumber" :readonly="readonly"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="14">
-                        <el-form-item label="目标零支销售单价" :label-width="formLabelWidth">
-                            <el-input v-model="single.salePrice" :readonly="readonly"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                   <el-col :span="14">
-                <el-form-item label="目标财务毛利额" :label-width="formLabelWidth">
-                    <el-input v-model="single.saleAmount" :readonly="readonly"></el-input>
-                </el-form-item>
-                   </el-col>
                 </el-row>
             
             </el-form>
@@ -175,9 +131,9 @@ export default {
     data() {
         return {
             fileList: [],
-            url: this.$url+'T_MANUAL_EST_EC/import',
+            url: this.$url+'T_MANUAL_NEWS_EC_LIST_STATE/import',
             entity: {
-                targetType:'M'
+                onTrace: ""
             },
             tableData:[],
             currentPage:1,
@@ -217,7 +173,7 @@ export default {
             console.log("查询");
             console.log(entity);
             //调用函数  传递参数 获取结果
-            this.$axios.get('/T_MANUAL_EST_EC',{params:entity}).then(res=>{
+            this.$axios.get('/T_MANUAL_NEWS_EC_LIST_STATE',{params:entity}).then(res=>{
                 if(res.status=='200'){
                     this.totalNum=Number(res.headers['x-total-count']);
                     this.tableData=res.data;           
@@ -228,6 +184,7 @@ export default {
         },
         handleClick(row,boolean) {
             this.single=JSON.parse(JSON.stringify(row));
+            this.single.oldItemCode=this.single.itemCode;
             this.readonly=boolean;
             this.dialogFormVisible = true;
         },
@@ -237,7 +194,7 @@ export default {
         },
         handleSubmit(single,boolean) {
             if(!boolean) {
-                this.$axios.put('/T_MANUAL_EST_EC',single).then(res=>{
+                this.$axios.put('/T_MANUAL_NEWS_EC_LIST_STATE',single).then(res=>{
                     console.log(res);
                     if(res.status=='200'){
                        this.$message.success('修改成功！');
@@ -252,7 +209,7 @@ export default {
             this.dialogFormVisible = false; 
         },
         handleDownload() {//模板下载
-            this.$axios.get('/T_MANUAL_EST_EC/file',{responseType: 'blob'}).then(res=>{
+            this.$axios.get('/T_MANUAL_NEWS_EC_LIST_STATE/file',{responseType: 'blob'}).then(res=>{
                     console.log(res);
                     if (!res) {
                         return
@@ -262,7 +219,7 @@ export default {
                     let link = document.createElement('a')
                     link.style.display = 'none'
                     link.href = url
-                    link.setAttribute('download', 'T_MANUAL_EST_EC模板.xlsx')
+                    link.setAttribute('download', 'T_MANUAL_NEWS_EC_LIST_STATE模板.xlsx')
                     document.body.appendChild(link)
                     link.click()
                 })

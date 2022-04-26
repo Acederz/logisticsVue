@@ -297,8 +297,6 @@ export default {
             this.single={};
         },
         handleSubmit(single,boolean) {
-            console.log("修改");
-            console.log(single);
             if(!boolean) {
                 this.$axios.put('/T_WL_ITEMSIZE',single).then(res=>{
                     console.log(res);
@@ -314,7 +312,7 @@ export default {
             }
             this.dialogFormVisible = false; 
         },
-        handleDownload() {
+        handleDownload() {//模板下载
             this.$axios.get('/T_WL_ITEMSIZE/file',{responseType: 'blob'}).then(res=>{
                     console.log(res);
                     if (!res) {

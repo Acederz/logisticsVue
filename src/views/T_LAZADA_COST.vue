@@ -3,17 +3,14 @@
         <el-form :inline="true" :model="entity" class="demo-form-inline" size="mini">
             <el-row type="flex" justify="start">
                 <el-col :span="6">
-                    <el-form-item label="料号">
-                        <el-input v-model="entity.itemCode" placeholder="输入料号"></el-input>
+                    <el-form-item label="CT001">
+                        <el-input v-model="entity.ct001" placeholder="输入CT001"></el-input>
                     </el-form-item>
                 </el-col>
                  <el-col :span="6">
-                    <el-form-item label="目标类型">
-                        <el-radio-group v-model="entity.targetType">
-                            <el-radio-button label="M">月</el-radio-button>
-                            <el-radio-button label="Y">年</el-radio-button>
-                            </el-radio-group>
-                        </el-form-item>
+                     <el-form-item label="CT002">
+                        <el-input v-model="entity.ct002" placeholder="输入CT002"></el-input>
+                    </el-form-item>
                 </el-col>
                 <el-col :span="2">
                      <el-form-item>
@@ -40,18 +37,6 @@
                     </el-upload>
                 </el-col>
             </el-row>
-            <el-row type="flex" justify="start">
-                 <el-col :span="6">
-                    <el-form-item label="年">
-                        <el-input v-model="entity.year" placeholder="输入年"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                    <el-form-item label="月">
-                        <el-input v-model="entity.month" placeholder="输入月"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
             <el-row type="flex" justify="end">
                 <el-col :span="20">
                     <div width="300px"></div>
@@ -62,36 +47,32 @@
         <el-divider></el-divider>
         <el-table
             :data="tableData"
-           
             border
             style="width: 100%">
             <el-table-column
-            prop="itemCode"
-            label="料号">
+            prop="ct001"
+            width="300"
+            label="CT001">
             </el-table-column>
             <el-table-column
-            prop="year"
-            label="年">
+            prop="ct002"
+            label="CT002">
             </el-table-column>
-            <el-table-column
-            prop="month"
-            label="月">
+             <el-table-column
+            prop="ct003"
+            label="CT003">
             </el-table-column>
-            <el-table-column
-            prop="targetType"
-            label="目标类型">
+             <el-table-column
+            prop="ct004"
+            label="CT004">
             </el-table-column>
-            <el-table-column
-            prop="saleNumber"
-            label="目标零支销售量">
+             <el-table-column
+            prop="ct005"
+            label="CT005">
             </el-table-column>
-            <el-table-column
-            prop="salePrice"
-            label="目标零支销售单价">
-            </el-table-column>
-            <el-table-column
-            prop="saleAmount"
-            label="目标财务毛利额">
+             <el-table-column
+            prop="ct006"
+            label="CT006">
             </el-table-column>
             <el-table-column
             fixed="right"
@@ -118,50 +99,40 @@
             <el-form label-position="left" :model="single" ref="single">
                 <el-row :gutter="20">
                     <el-col :span="12">
-                        <el-form-item label="料号" :label-width="formLabelWidth">
-                            <el-input v-model="single.itemCode" :readonly="readonly"></el-input>
+                        <el-form-item label="CT001" :label-width="formLabelWidth">
+                            <el-input v-model="single.ct001" :readonly="readonly"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="目标类型" :label-width="formLabelWidth">
-                            <el-input v-model="single.targetType" :readonly="readonly"></el-input>
+                        <el-form-item label="CT002" :label-width="formLabelWidth">
+                            <el-input v-model="single.ct002" :readonly="readonly"></el-input>
                         </el-form-item>
                    </el-col>
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="12">
-                        <el-form-item label="年" :label-width="formLabelWidth">
-                            <el-input v-model="single.year" :readonly="readonly"></el-input>
+                        <el-form-item label="CT003" :label-width="formLabelWidth">
+                            <el-input v-model="single.ct003" :readonly="readonly"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="月" :label-width="formLabelWidth">
-                            <el-input v-model="single.month" :readonly="readonly"></el-input>
+                        <el-form-item label="CT004" :label-width="formLabelWidth">
+                            <el-input v-model="single.ct004" :readonly="readonly"></el-input>
                         </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="14">
-                        <el-form-item label="目标零支销售量" :label-width="formLabelWidth">
-                            <el-input v-model="single.saleNumber" :readonly="readonly"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="14">
-                        <el-form-item label="目标零支销售单价" :label-width="formLabelWidth">
-                            <el-input v-model="single.salePrice" :readonly="readonly"></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20">
-                   <el-col :span="14">
-                <el-form-item label="目标财务毛利额" :label-width="formLabelWidth">
-                    <el-input v-model="single.saleAmount" :readonly="readonly"></el-input>
-                </el-form-item>
                    </el-col>
                 </el-row>
-            
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-form-item label="CT005" :label-width="formLabelWidth">
+                            <el-input v-model="single.ct005" :readonly="readonly"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="CT002" :label-width="formLabelWidth">
+                            <el-input v-model="single.ct002" :readonly="readonly"></el-input>
+                        </el-form-item>
+                   </el-col>
+                </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="handleCancel">取 消</el-button>
@@ -175,7 +146,7 @@ export default {
     data() {
         return {
             fileList: [],
-            url: this.$url+'T_MANUAL_EST_EC/import',
+            url: this.$url+'T_LAZADA_COST/import',
             entity: {
                 targetType:'M'
             },
@@ -217,7 +188,7 @@ export default {
             console.log("查询");
             console.log(entity);
             //调用函数  传递参数 获取结果
-            this.$axios.get('/T_MANUAL_EST_EC',{params:entity}).then(res=>{
+            this.$axios.get('/T_LAZADA_COST',{params:entity}).then(res=>{
                 if(res.status=='200'){
                     this.totalNum=Number(res.headers['x-total-count']);
                     this.tableData=res.data;           
@@ -237,7 +208,7 @@ export default {
         },
         handleSubmit(single,boolean) {
             if(!boolean) {
-                this.$axios.put('/T_MANUAL_EST_EC',single).then(res=>{
+                this.$axios.put('/T_LAZADA_COST',single).then(res=>{
                     console.log(res);
                     if(res.status=='200'){
                        this.$message.success('修改成功！');
@@ -252,7 +223,7 @@ export default {
             this.dialogFormVisible = false; 
         },
         handleDownload() {//模板下载
-            this.$axios.get('/T_MANUAL_EST_EC/file',{responseType: 'blob'}).then(res=>{
+            this.$axios.get('/T_LAZADA_COST/file',{responseType: 'blob'}).then(res=>{
                     console.log(res);
                     if (!res) {
                         return
@@ -262,7 +233,7 @@ export default {
                     let link = document.createElement('a')
                     link.style.display = 'none'
                     link.href = url
-                    link.setAttribute('download', 'T_MANUAL_EST_EC模板.xlsx')
+                    link.setAttribute('download', 'T_LAZADA_COST模板.xlsx')
                     document.body.appendChild(link)
                     link.click()
                 })
