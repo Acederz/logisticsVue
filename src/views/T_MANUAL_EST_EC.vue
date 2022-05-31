@@ -10,8 +10,9 @@
                  <el-col :span="6">
                     <el-form-item label="目标类型">
                         <el-radio-group v-model="entity.targetType">
-                            <el-radio-button label="M">月</el-radio-button>
-                            <el-radio-button label="Y">年</el-radio-button>
+                             <el-radio-button label="">全部</el-radio-button>
+                            <el-radio-button label="M"></el-radio-button>
+                            <el-radio-button label="Y"></el-radio-button>
                             </el-radio-group>
                         </el-form-item>
                 </el-col>
@@ -177,7 +178,7 @@ export default {
             fileList: [],
             url: this.$url+'T_MANUAL_EST_EC/import',
             entity: {
-                targetType:'M'
+                targetType:''
             },
             tableData:[],
             currentPage:1,
