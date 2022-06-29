@@ -14,9 +14,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 声明基础访问地址
 
 const isPro = Object.is(process.env.NODE_ENV, 'production')
-axios.defaults.baseURL = 'http://192.168.87.70:8080/api/'
+axios.defaults.baseURL = 'http://192.168.80.98:8080/api/'
 // 全局注册，之后可在其他组件中通过 this.$axios 发送数据
-Vue.prototype.$url = 'http://192.168.87.70:8080/api/'
+Vue.prototype.$url = 'http://192.168.80.98:8080/api/'
 Vue.prototype.$axios = axios
 Vue.prototype.$qs = qs
 Vue.config.productionTip = false

@@ -9,6 +9,7 @@ const T_MANUAL_NEWS_EC_LIST_STATE = () => import('@/views/T_MANUAL_NEWS_EC_LIST_
 const T_VIETNAM_POA_FILE = () => import('@/views/T_VIETNAM_POA_FILE')
 const T_LAZADA_COST = () => import('@/views/T_LAZADA_COST')
 const T_TIKI_PRODUCT = () => import('@/views/T_TIKI_PRODUCT')
+const T_NEW_RETAIL_DYGMV = () => import('@/views/T_NEW_RETAIL_DYGMV')
 Vue.use(Router)
 
 let router = new Router({
@@ -63,6 +64,11 @@ let router = new Router({
           path: '/T_TIKI_PRODUCT',
           name: 'T_TIKI_PRODUCT',
           component: T_TIKI_PRODUCT
+        },
+        {
+          path: '/T_NEW_RETAIL_DYGMV',
+          name: 'T_NEW_RETAIL_DYGMV',
+          component: T_NEW_RETAIL_DYGMV
         }
       ]
     }
