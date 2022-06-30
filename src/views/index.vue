@@ -69,10 +69,13 @@ export default {
     }
   },
   created: function() {
-    let token = window.sessionStorage.getItem('access-token');
-    this.$axios.get('/USER_AUTHORITY/'+token,).then(res=>{
-      console.log(res.data);
-      this.nav=res.data;
+    let account = localStorage.getItem('account');
+    this.$axios.get('/USER_AUTHORITY/'+account,).then(res=>{
+        this.nav=res.data;
+         console.log(res.data.code);
+        if(res.data.code == 50000) {
+          this.$router.push({path:'/login'});
+        }
     })
   }
 }

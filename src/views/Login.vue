@@ -25,8 +25,6 @@
 </template>
 
 <script>
-    //引入api.js  好调用里面的接口
-    //import {requestLogin} from '../api';
     export default {
         name: 'login',
         data() {
@@ -66,14 +64,13 @@
                             
                             this.logining = false;
                             console.log(res.data);
-                            if(res.data.result==0){
-                                //登录成功
-                                console.log("yes");
-                                sessionStorage.setItem('access-token',res.data.token);
-                                //用vue路由跳转到后台主界面
+                            if(res.data.code == 200){
+                                //将token和user保存到localStorage中
+                                this.$store.commit('setToken',res.data.token);
+                                this.$store.commit('setAccount',res.data.account);
+                                //跳转到登录成功后的页面
                                 this.$router.push({path:'/index'});
                             }else{
-                                console.log("no");
                                 this.$message({
                                     message:res.data.msg,
                                     type:'error'

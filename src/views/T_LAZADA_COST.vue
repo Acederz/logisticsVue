@@ -26,6 +26,7 @@
                     <el-upload
                     class="upload-demo"
                     :action="url"
+                    :headers = "headers"
                     multiple
                     :limit="1"
                     :on-exceed="handleExceed"
@@ -147,6 +148,7 @@ export default {
         return {
             fileList: [],
             url: this.$url+'T_LAZADA_COST/import',
+            headers: { token : localStorage.getItem('token') },
             entity: {
                 targetType:'M'
             },
@@ -169,6 +171,7 @@ export default {
         },
         handleSuccess(response, file, fileList) {
             this.$message.success(file.name+'上传成功！');
+            this.handleSearch(this.entity);
         },
         handleSizeChange(val) {
             this.pageSize=val;

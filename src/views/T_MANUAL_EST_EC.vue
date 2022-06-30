@@ -30,6 +30,7 @@
                     <el-upload
                     class="upload-demo"
                     :action="url"
+                    :headers = "headers"
                     multiple
                     :limit="1"
                     :on-exceed="handleExceed"
@@ -177,6 +178,7 @@ export default {
         return {
             fileList: [],
             url: this.$url+'T_MANUAL_EST_EC/import',
+            headers: { token : localStorage.getItem('token') },
             entity: {
                 targetType:''
             },
@@ -199,6 +201,7 @@ export default {
         },
         handleSuccess(response, file, fileList) {
             this.$message.success(file.name+'上传成功！');
+            this.handleSearch(this.entity);
         },
         handleSizeChange(val) {
             this.pageSize=val;

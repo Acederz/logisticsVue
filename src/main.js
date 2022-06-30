@@ -9,6 +9,7 @@ import axios from 'axios'
 import qs from 'qs'
 //import './plugins/element.js'
 
+import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // 声明基础访问地址
@@ -26,6 +27,22 @@ Vue.use(ElementUI)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
+
+//请求拦截器 在请求头中加token
+axios.interceptors.request.use(
+  config => {
+      if(localStorage.getItem('token')){
+         // config.headers.token = localStorage.getItem('token');
+         config.headers.common['token'] = localStorage.getItem('token');
+      }
+      return config;
+  },
+  error => {
+      return Promise.reject(error);
+  }
+)
+

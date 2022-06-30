@@ -75,21 +75,20 @@ let router = new Router({
   ]
 })
 
-//对每次访问之前都要先看是否已经登录
-router.beforeEach((to,from,next)=>{
-  if(to.path.startsWith('/login')){
-      window.sessionStorage.removeItem('access-token');
+//路由全局前置守卫
+router.beforeEach((to,from,next) => {
+  if(to.path === '/register' || to.path === '/login' || to.path === '/'){ //若是进入登录与注册页面 ==> pass
+    next()
+  }else{ 
+    let userToken = localStorage.getItem('token');
+    console.log("Token为:"+userToken); 
+    if(userToken == null || userToken == ''){
+      alert("无权限，请先登录!");
+      return next('/login');
+    }else{
       next();
-  }else{
-      let token = window.sessionStorage.getItem('access-token');
-      if(!token){
-          //未登录  跳回主页面
-          next({path:'/login'});
-      }else{
-          next();
-      }
+    }
   }
-
-});
+})
 
 export default router
