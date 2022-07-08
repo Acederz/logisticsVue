@@ -29,6 +29,7 @@
                 <el-col :span="2">
                     <el-upload
                     class="upload-demo"
+                    ref="upload"
                     :action="url"
                     :headers = "headers"
                     multiple
@@ -201,6 +202,7 @@ export default {
         },
         handleSuccess(response, file, fileList) {
             this.$message.success(file.name+'上传成功！');
+            this.$refs.upload.clearFiles()
             this.handleSearch(this.entity);
         },
         handleSizeChange(val) {

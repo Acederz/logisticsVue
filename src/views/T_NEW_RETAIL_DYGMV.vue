@@ -69,6 +69,7 @@
                 <el-col :span="2">
                     <el-upload
                     class="upload-demo"
+                    ref="upload"
                     :action="url"
                     :headers = "headers"
                     multiple
@@ -229,7 +230,8 @@ export default {
             single: {},
             formLabelWidth: '140px',
             dialogFormVisible: false,
-            readonly: false
+            readonly: false,
+            pageFlg: false
         }; 
     },
     methods: {
@@ -241,6 +243,7 @@ export default {
         },
         handleSuccess(response, file, fileList) {
             this.$message.success(file.name+'上传成功！');
+            this.$refs.upload.clearFiles()
             this.handleSearch(this.entity);
         },
         handleSizeChange(val) {
@@ -250,16 +253,20 @@ export default {
         },
         handleCurrentChange(val) {
             this.currentPage=val;
+            this.pageFlg=true;
             this.handleSearch(this.entity);
             console.log(`当前页: ${val}`);
         },
         handleSearch(entity){             
             //将提交的数据进行封装
             this.entity.size=this.pageSize;
-            this.entity.page=this.currentPage-1;
+            if(this.pageFlg) {
+                this.entity.page=this.currentPage-1;
+            } else {
+                this.currentPage=1;
+                this.entity.page=0;
+            }
             //this.entity.sort='updateTime,desc','sort=launchTime,desc';
-            console.log("查询");
-            console.log(entity);
             //调用函数  传递参数 获取结果
             this.$axios.get('/T_NEW_RETAIL_DYGMV',{params:entity}).then(res=>{
                 if(res.status=='200'){
@@ -269,6 +276,7 @@ export default {
                         
                 }
             }) 
+            this.pageFlg=false;
         },
         handleClick(row,boolean) {
             this.single=JSON.parse(JSON.stringify(row));
