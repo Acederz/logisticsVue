@@ -12,6 +12,7 @@ import qs from 'qs'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+
 // 声明基础访问地址
 
 //const isPro = Object.is(process.env.NODE_ENV, 'production')
@@ -45,4 +46,5 @@ axios.interceptors.request.use(
       return Promise.reject(error);
   }
 )
+ElementUI.Dialog.props.closeOnClickModal.default = false;
 

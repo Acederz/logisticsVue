@@ -77,7 +77,7 @@ let router = new Router({
 
 //路由全局前置守卫
 router.beforeEach((to,from,next) => {
-  if(to.path === '/register' || to.path === '/login' || to.path === '/'){ //若是进入登录与注册页面 ==> pass
+  if(to.path === '/register' || to.path === '/login'){ //若是进入登录与注册页面 ==> pass
     next()
   }else{ 
     let userToken = localStorage.getItem('token');

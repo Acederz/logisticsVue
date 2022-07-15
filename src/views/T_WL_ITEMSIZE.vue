@@ -255,7 +255,11 @@ export default {
     },
     methods: {
         handleFailed(err, file, fileList) {
-            this.$message.error(err);
+            this.$message({
+                showClose: true,
+                type: 'error',
+                message: err
+            }); 
         },
         handleExceed(files, fileList) {
             this.$message.warning(`只能上传一个文件`);

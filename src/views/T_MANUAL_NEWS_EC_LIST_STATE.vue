@@ -4,12 +4,12 @@
             <el-row type="flex" justify="start">
                 <el-col :span="6">
                     <el-form-item label="料号">
-                        <el-input v-model="entity.itemCode" placeholder="输入料号"></el-input>
+                        <el-input v-model="entity.itemCode" placeholder="输入料号" clearable></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
                     <el-form-item label="料号简称">
-                        <el-input v-model="entity.itemName" placeholder="输入料号简称"></el-input>
+                        <el-input v-model="entity.itemName" placeholder="输入料号简称" clearable></el-input>
                     </el-form-item>
                 </el-col>
                  <el-col :span="6">
@@ -48,6 +48,28 @@
                     </el-upload>
                 </el-col>
             </el-row>
+            <el-row type="flex" justify="start">
+                <el-col :span="6">
+                    <el-form-item label="负责人">
+                        <el-input v-model="entity.charge" placeholder="输入负责人" clearable></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                    <el-form-item label="系列">
+                        <el-input v-model="entity.series" placeholder="输入系列" clearable></el-input>
+                    </el-form-item>
+                </el-col>
+                 <el-col :span="6">
+                    <el-form-item label="事业部">
+                        <el-input v-model="entity.division" placeholder="输入事业部" clearable></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="2">
+                     <el-form-item>
+                        <el-button size="mini" type="danger" style="width: 150px" @click="handleDeleteAll(entity)">按查询条件删除</el-button>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-row type="flex" justify="end">
                 <el-col :span="20">
                     <div width="300px"></div>
@@ -72,6 +94,18 @@
             <el-table-column
             prop="onTrace"
             label="是否追踪">
+            </el-table-column>
+             <el-table-column
+            prop="charge"
+            label="负责人">
+            </el-table-column>
+             <el-table-column
+            prop="series"
+            label="系列">
+            </el-table-column>
+             <el-table-column
+            prop="division"
+            label="事业部">
             </el-table-column>
             <el-table-column
             fixed="right"
@@ -99,16 +133,33 @@
                 <el-row :gutter="20">
                     <el-col :span="12">
                         <el-form-item label="料号" :label-width="formLabelWidth">
-                            <el-input v-model="single.itemCode" :readonly="readonly"></el-input>
+                            <el-input v-model="single.itemCode" :readonly="readonly" clearable></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="料号简称" :label-width="formLabelWidth">
-                            <el-input v-model="single.itemName" :readonly="readonly"></el-input>
+                            <el-input v-model="single.itemName" :readonly="readonly" clearable></el-input>
                         </el-form-item>
                    </el-col>
                 </el-row>
                 <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-form-item label="负责人" :label-width="formLabelWidth">
+                            <el-input v-model="single.charge" :readonly="readonly" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="系列" :label-width="formLabelWidth">
+                            <el-input v-model="single.series" :readonly="readonly" clearable></el-input>
+                        </el-form-item>
+                   </el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <el-form-item label="事业部" :label-width="formLabelWidth">
+                            <el-input v-model="single.division" :readonly="readonly" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
                     <el-col :span="12">
                         <el-form-item label="是否追踪">
                             <el-input v-model="single.onTrace" v-if="readonly" :readonly="readonly"></el-input>
@@ -145,12 +196,17 @@ export default {
             single: {},
             formLabelWidth: '140px',
             dialogFormVisible: false,
-            readonly: false
+            readonly: false,
+            pageFlg: false
         }; 
     },
     methods: {
         handleFailed(err, file, fileList) {
-            this.$message.error(err);
+            this.$message({
+                showClose: true,
+                type: 'error',
+                message: err
+            }); 
         },
         handleExceed(files, fileList) {
             this.$message.warning(`只能上传一个文件`);
@@ -167,13 +223,19 @@ export default {
         },
         handleCurrentChange(val) {
             this.currentPage=val;
+             this.pageFlg=true;
             this.handleSearch(this.entity);
             console.log(`当前页: ${val}`);
         },
         handleSearch(entity){             
             //将提交的数据进行封装
             this.entity.size=this.pageSize;
-            this.entity.page=this.currentPage-1;
+            if(this.pageFlg) {
+                this.entity.page=this.currentPage-1;
+            } else {
+                this.currentPage=1;
+                this.entity.page=0;
+            }
             //this.entity.sort='updateTime,desc','sort=launchTime,desc';
             console.log("查询");
             console.log(entity);
@@ -186,6 +248,7 @@ export default {
                         
                 }
             }) 
+            this.pageFlg=false;
         },
         handleClick(row,boolean) {
             this.single=JSON.parse(JSON.stringify(row));
@@ -213,6 +276,33 @@ export default {
             }
             this.dialogFormVisible = false; 
         },
+        handleDeleteAll(entity)  {
+            this.$confirm('此操作将永久删除数据, 是否按查询条件删除?', '删除确认', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$axios.delete('/T_MANUAL_NEWS_EC_LIST_STATE/delete',{params:entity}).then(res=>{
+                        if(res.status=='200'){                              
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });    
+                            this.handleSearch(this.entity);     
+                        }else{
+                            this.$message({
+                                type: 'error',
+                                message: '删除失败!'
+                            }); 
+                        }
+                    }) 
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
+        },
         handleDownload() {//模板下载
             this.$axios.get('/T_MANUAL_NEWS_EC_LIST_STATE/file',{responseType: 'blob'}).then(res=>{
                     console.log(res);
@@ -224,7 +314,7 @@ export default {
                     let link = document.createElement('a')
                     link.style.display = 'none'
                     link.href = url
-                    link.setAttribute('download', 'T_MANUAL_NEWS_EC_LIST_STATE模板.xlsx')
+                    link.setAttribute('download', '新品目标清单模板.xlsx')
                     document.body.appendChild(link)
                     link.click()
                 })

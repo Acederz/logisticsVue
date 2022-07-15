@@ -236,7 +236,11 @@ export default {
     },
     methods: {
         handleFailed(err, file, fileList) {
-            this.$message.error(err);
+            this.$message({
+                showClose: true,
+                type: 'error',
+                message: err
+            }); 
         },
         handleExceed(files, fileList) {
             this.$message.warning(`只能上传一个文件`);
@@ -314,7 +318,7 @@ export default {
                     let link = document.createElement('a')
                     link.style.display = 'none'
                     link.href = url
-                    link.setAttribute('download', 'T_NEW_RETAIL_DYGMV模板.xlsx')
+                    link.setAttribute('download', '抖音电商轮盘价格分析模板.xlsx')
                     document.body.appendChild(link)
                     link.click()
                 })
