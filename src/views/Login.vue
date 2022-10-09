@@ -16,7 +16,7 @@
             
             <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
             
-            <el-form-item style="width:100%;">
+            <el-form-item style="width:100%;margin-top:5%">
                 <el-button type="primary" style="width:100%;" @click.native.prevent='handleLogin' :loading= 'logining'>登录</el-button>
             </el-form-item>
 
@@ -90,7 +90,7 @@
    
 <style>
  div.login {
-        width:400px;
-        margin: 100px auto;
+        width:20%;
+        margin: 10% auto;
     }
 </style>

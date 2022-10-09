@@ -237,8 +237,6 @@ export default {
                 this.entity.page=0;
             }
             //this.entity.sort='updateTime,desc','sort=launchTime,desc';
-            console.log("查询");
-            console.log(entity);
             //调用函数  传递参数 获取结果
             this.$axios.get('/T_MANUAL_NEWS_EC_LIST_STATE',{params:entity}).then(res=>{
                 if(res.status=='200'){

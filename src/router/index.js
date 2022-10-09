@@ -37,7 +37,7 @@ let router = new Router({
       children:[
         {
           path: '/T_WL_ITEMSIZE',
-          name: '打的',
+          name: 'T_WL_ITEMSIZE',
           component: T_WL_ITEMSIZE
         },
         {

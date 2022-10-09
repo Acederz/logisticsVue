@@ -1,5 +1,5 @@
 <template>   
-    <el-container id="a">
+    <el-container :style="{minHeight :minHeight +'px'}">
         <el-header><h1>脱普数据导入系统</h1></el-header>
         <el-divider></el-divider>
         <el-row>
@@ -23,14 +23,20 @@
 <style>
   .el-header {
     text-align: left;
+    padding: 0;
+    width: 100%;
   }
 
   .el-header h1 {
-    margin: 5px 0px;
+    margin: 0.3% 0.3%;
   }
 
   .el-divider{
     margin-top: 0px;
+  }
+
+  .el-main {
+    overflow: visible;
   }
 </style>
 
@@ -46,24 +52,6 @@ export default {
          
           title: "首页",
           path: "/index"
-        },
-        {
-          title: "T_WL_ITEMSIZE",
-          path: "/T_WL_ITEMSIZE"
-        },
-        {
-         
-          title: "admin",
-          child: [
-             {
-              title: "testadmin",
-              path: "/a"
-            },
-            {
-              title: "testadmin",
-              path: "/b"
-            }
-          ]
         }
       ]
     }
@@ -77,20 +65,16 @@ export default {
           this.$router.push({path:'/login'});
         }
     })
+  }, 
+  mounted() {
+    this.minHeight = document.documentElement.clientHeight - 0;
+    this.marginLeft = (document.documentElement.clientWidth - 1920) / 2;
+    const that = this;
+    window.onresize = function () {
+      that.minHeight = document.documentElement.clientHeight - 0;
+      that.marginLeft = (document.documentElement.clientWidth - 1920) / 2
+    };
   }
 }
       
-
-  // export default {
-  //   data() {
-  //     const item = {
-  //       date: '2016-05-02',
-  //       name: '王小虎',
-  //       address: '上海市普陀区金沙江路 1518 弄'
-  //     };
-  //     return {
-  //       tableData: Array(5).fill(item)
-  //     }
-  //   }
-  // };
 </script>

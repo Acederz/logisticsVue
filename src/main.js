@@ -46,5 +46,17 @@ axios.interceptors.request.use(
       return Promise.reject(error);
   }
 )
+
+axios.interceptors.response.use(function (res,next) {
+  console.log("token判断:"+res.data)
+  const that = this
+  if (res.data.code == '50000') {
+    router.replace({
+      path: '/login'
+    })
+    return false;
+  }
+  return res
+})
 ElementUI.Dialog.props.closeOnClickModal.default = false;
 
